@@ -1,0 +1,44 @@
+---
+title: "Untitled"
+author: '14'
+date: "18 March 2022"
+output: pdf_document
+---
+```{r libraries}
+library(tidyverse)
+library(moderndive)
+library(skimr)
+library(kableExtra)
+library(gridExtra)
+```
+
+```{r data, echo = FALSE, eval = TRUE, warning = FALSE, message = FALSE}
+data<- read.csv("E:/dataset14.csv")
+```
+
+```{r}
+data <- data.frame(data)
+data
+```
+filter data
+1.remove all NA
+```{r}
+data %>% drop_na(depth,height,width)
+```
+2.remove the data that is NA at the same time(d,h,w)
+```{r}
+data %>% filter(!(is.na((depth)&is.na((height)&is.na(width)))))
+```
+select filter2
+```{r}
+data_f2 <- data %>% 
+  filter(!(is.na((depth)&is.na((height)&is.na(width)))))
+```
+
+fill NA with mean value
+```{r}
+data_f2$depth[is.na(data_f2$depth)] = mean(data_f2$depth,na.rm = TRUE)
+data_f2$height[is.na(data_f2$height)] =mean(data_f2$height,na.rm = TRUE)
+data_f2$width[is.na(data_f2$width)] = mean(data_f2$width,na.rm = TRUE)
+```
+
